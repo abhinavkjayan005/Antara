@@ -4,159 +4,404 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ANTARA — Between the Notes</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+Devanagari:wght@300;400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<meta name="description" content="Antara — Between the Notes. An audio-visual installation on raga identity and microtonal articulation by Abhinav K Jayan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Devanagari:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
 :root{
-  --bg:#12100a;--bg2:#1a1509;--parch:#1e1a0e;
-  --gold:#c8881a;--gold-lt:#e0a830;--gold-dim:#7a5010;
-  --vermil:#b83820;--teal:#1a5048;--teal-lt:#2a7060;
-  --ivory:#f0e8d4;--ivory-dim:#c0b090;--muted:#806840;
-  --border:#3a2e14;--border-lt:#5a4820;
+  --bg:#0f0c06;
+  --bg2:#161106;
+  --bg3:#1c1608;
+  --gold:#c8881a;
+  --gold-lt:#eab548;
+  --gold-dim:#7a5510;
+  --vermil:#bf4422;
+  --vermil-lt:#e06a3c;
+  --teal:#1d5a52;
+  --teal-lt:#3d8a7a;
+  --ivory:#f2e9d5;
+  --ivory-dim:#c4b292;
+  --muted:#8a7148;
+  --faint:#574627;
+  --border:#3a2e12;
 }
+
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ivory);font-family:'EB Garamond',Georgia,serif;font-size:17px;line-height:1.8;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;z-index:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8881a' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+::selection{background:var(--gold-dim);color:var(--ivory)}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(18,16,10,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:60px}
-nav::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
-.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.nav-brand-latin{font-family:'EB Garamond',serif;font-size:20px;letter-spacing:0.14em;color:var(--gold)}
+body{
+  background:var(--bg);
+  color:var(--ivory);
+  font-family:'EB Garamond',Georgia,serif;
+  font-size:17px;
+  line-height:1.8;
+  overflow-x:hidden;
+}
+
+/* ── paper grain ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.53 0 0 0 0 0.10 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:rgba(15,12,6,.94);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:62px;
+}
+#scroll-progress{
+  position:absolute;bottom:-1px;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--gold),var(--vermil));
+  transition:width .1s linear;
+}
+.nav-brand{display:flex;align-items:baseline;gap:12px;text-decoration:none}
+.nav-brand-latin{font-family:'EB Garamond',serif;font-size:21px;letter-spacing:.16em;color:var(--gold-lt)}
 .nav-brand-dev{font-family:'Noto Serif Devanagari',serif;font-size:16px;color:var(--muted)}
-.nav-links{display:flex;gap:28px}
-.nav-links a{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.25s}
+.nav-links{display:flex;gap:30px}
+.nav-links a{
+  font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .25s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;right:100%;bottom:-6px;height:1px;
+  background:var(--gold);transition:right .3s ease;
+}
 .nav-links a:hover{color:var(--gold-lt)}
+.nav-links a:hover::after{right:0}
 
-/* GEO BANDS */
-.geo-band{width:100%;height:12px;background:repeating-linear-gradient(90deg,var(--gold-dim) 0px,var(--gold-dim) 8px,transparent 8px,transparent 16px,var(--vermil) 16px,var(--vermil) 20px,transparent 20px,transparent 28px);opacity:0.35}
-.geo-band-thin{width:100%;height:4px;background:repeating-linear-gradient(90deg,var(--gold-dim) 0px,var(--gold-dim) 4px,transparent 4px,transparent 8px);opacity:0.25}
-.section-divider{border:none;border-top:1px solid var(--border);position:relative;margin:0}
-.section-divider::after{content:'✦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:var(--gold-dim);background:var(--bg);padding:0 12px}
+/* ── reveal animation ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.22s}.reveal.d3{transition-delay:.34s}
 
-/* HERO */
-#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:80px 0 60px}
-.mandala-bg{position:absolute;right:-100px;top:50%;transform:translateY(-50%);width:640px;height:640px;opacity:0.06;animation:slowspin 90s linear infinite}
-@keyframes slowspin{from{transform:translateY(-50%) rotate(0deg)}to{transform:translateY(-50%) rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){.mandala-bg{animation:none}}
-.hero-inner{position:relative;z-index:1;padding:0 64px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.hero-eyebrow{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0.8}
-.hero-dev{font-family:'Noto Serif Devanagari',serif;font-size:clamp(52px,7vw,88px);font-weight:300;line-height:1.1;color:var(--gold-lt);margin-bottom:8px}
-.hero-latin{font-family:'EB Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:400;line-height:1.1;color:var(--ivory);letter-spacing:0.08em;margin-bottom:20px}
-.hero-tagline{font-family:'EB Garamond',serif;font-size:19px;font-style:italic;color:var(--ivory-dim);line-height:1.7;margin-bottom:28px}
-.hero-statement{font-size:15px;color:var(--muted);line-height:1.9;border-left:2px solid var(--gold-dim);padding-left:20px;font-family:'Inter',sans-serif;font-weight:300}
-.hero-right{display:flex;flex-direction:column;gap:14px}
-.hero-meta-card{padding:16px 20px;background:rgba(200,136,26,0.05);border:1px solid var(--border);border-left:2px solid var(--gold-dim)}
-.meta-label{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;opacity:0.7}
-.meta-value{font-size:15px;color:var(--ivory-dim);font-family:'EB Garamond',serif}
+/* ── THE MEEND WAVE (signature) ── */
+.meend-wave{display:block;width:100%;height:90px;margin:0;position:relative;z-index:1}
+.meend-wave path{
+  fill:none;stroke-width:1.6;
+  stroke-dasharray:1600;stroke-dashoffset:1600;
+}
+.meend-wave.in path{animation:drawline 3.5s ease forwards}
+@keyframes drawline{to{stroke-dashoffset:0}}
+.wave-caption{
+  display:flex;justify-content:space-between;max-width:1100px;margin:-14px auto 0;
+  padding:0 64px;position:relative;z-index:1;
+}
+.wave-caption span{
+  font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+}
+.wave-caption .wc-a{color:var(--gold)}
+.wave-caption .wc-b{color:var(--teal-lt)}
 
-/* SECTIONS */
-.section-wrap{padding:90px 64px;max-width:1100px;margin:0 auto;position:relative;z-index:1}
-.eyebrow{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;opacity:0.8}
-h2{font-family:'EB Garamond',serif;font-size:clamp(26px,3.5vw,42px);font-weight:400;line-height:1.25;color:var(--ivory);margin-bottom:24px}
-h2 .dev-inline{font-family:'Noto Serif Devanagari',serif;color:var(--gold);font-size:0.85em}
-p{color:var(--ivory-dim);line-height:1.85;margin-bottom:16px;max-width:660px;font-size:16px}
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:90px 0 40px}
+#hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 18% 65%, rgba(200,136,26,.07), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 25%, rgba(191,68,34,.05), transparent 60%);
+}
+.mandala-wrap{
+  position:absolute;right:-140px;top:50%;transform:translateY(-50%);
+  width:720px;height:720px;pointer-events:none;
+}
+.mandala{width:100%;height:100%;opacity:.085;animation:spin 110s linear infinite}
+.mandala-inner{
+  position:absolute;inset:18%;opacity:.06;
+  animation:spin 70s linear infinite reverse;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mandala-breathe{animation:breathe 9s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-50%) scale(1.035)}}
+
+.hero-inner{
+  position:relative;z-index:2;
+  padding:0 64px;max-width:1140px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;
+}
+.hero-eyebrow{
+  font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:26px;display:flex;align-items:center;gap:14px;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold-dim)}
+.hero-dev{
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:clamp(64px,9vw,118px);font-weight:300;line-height:1.05;
+  background:linear-gradient(120deg,var(--gold-lt) 20%,var(--gold) 55%,var(--vermil-lt));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:2px;
+}
+.hero-latin{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(30px,4vw,48px);font-weight:500;line-height:1.1;
+  color:var(--ivory);letter-spacing:.22em;margin-bottom:18px;
+}
+.hero-tagline{
+  font-size:20px;font-style:italic;color:var(--ivory-dim);margin-bottom:30px;
+}
+.hero-statement{
+  font-family:'Inter',sans-serif;font-weight:300;font-size:15px;
+  color:var(--muted);line-height:2;max-width:460px;
+  border-left:2px solid var(--gold-dim);padding-left:22px;
+}
+.hero-statement em{color:var(--ivory-dim);font-style:normal}
+
+.hero-meta{display:flex;flex-direction:column;gap:0;border:1px solid var(--border)}
+.hero-meta-row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:16px 22px;border-bottom:1px solid var(--border);
+  background:rgba(200,136,26,.035);transition:background .3s;
+}
+.hero-meta-row:last-child{border-bottom:none}
+.hero-meta-row:hover{background:rgba(200,136,26,.09)}
+.hm-label{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:.75;white-space:nowrap}
+.hm-value{font-size:15px;color:var(--ivory-dim);text-align:right}
+.hm-value .dev{font-family:'Noto Serif Devanagari',serif;color:var(--gold-lt);font-size:14px}
+
+.scroll-hint{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:2;
+}
+.scroll-hint::after{
+  content:'';width:1px;height:34px;
+  background:linear-gradient(180deg,var(--gold-dim),transparent);
+  animation:hintpulse 2.4s ease-in-out infinite;
+}
+@keyframes hintpulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* ── SECTIONS ── */
+.section-wrap{padding:100px 64px;max-width:1140px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{
+  font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{content:'';width:26px;height:1px;background:var(--gold-dim)}
+h2{
+  font-family:'EB Garamond',serif;font-size:clamp(28px,3.6vw,46px);
+  font-weight:500;line-height:1.22;color:var(--ivory);margin-bottom:26px;
+}
+h2 .dev-inline{font-family:'Noto Serif Devanagari',serif;font-weight:300;color:var(--gold);font-size:.8em}
+p{color:var(--ivory-dim);line-height:1.9;margin-bottom:16px;max-width:680px;font-size:16.5px}
 p strong{color:var(--ivory);font-weight:500}
-.ornament{text-align:center;color:var(--gold-dim);font-size:18px;letter-spacing:12px;margin:32px 0;opacity:0.5}
+.ornament{text-align:center;color:var(--gold-dim);font-size:16px;letter-spacing:16px;margin:36px 0;opacity:.55}
 
-/* SIDES */
-.sides-container{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:36px;border:1px solid var(--border)}
-.side-panel{padding:36px 32px;position:relative;overflow:hidden}
-.side-panel.side-a{background:rgba(200,136,26,0.05);border-right:1px solid var(--border)}
-.side-panel.side-b{background:rgba(26,80,72,0.05)}
-.side-tag{display:inline-block;font-family:'Inter',sans-serif;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;padding:4px 12px;margin-bottom:16px;border:1px solid}
-.side-a .side-tag{color:var(--gold);border-color:var(--gold-dim)}
+/* ── SIDES ── */
+.sides-container{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--border)}
+.side-panel{
+  padding:40px 34px;position:relative;overflow:hidden;
+  transition:transform .45s cubic-bezier(.2,.7,.3,1), box-shadow .45s;
+}
+.side-panel:hover{transform:translateY(-5px);z-index:2}
+.side-panel.side-a{background:linear-gradient(160deg,rgba(200,136,26,.09),rgba(200,136,26,.02));border-right:1px solid var(--border)}
+.side-panel.side-a:hover{box-shadow:0 18px 50px -16px rgba(200,136,26,.3)}
+.side-panel.side-b{background:linear-gradient(160deg,rgba(29,90,82,.1),rgba(29,90,82,.02))}
+.side-panel.side-b:hover{box-shadow:0 18px 50px -16px rgba(61,138,122,.28)}
+.side-panel::after{
+  content:attr(data-glyph);position:absolute;bottom:-26px;right:-6px;
+  font-family:'Noto Serif Devanagari',serif;font-size:120px;line-height:1;
+  opacity:.05;pointer-events:none;
+}
+.side-a::after{color:var(--gold)}
+.side-b::after{color:var(--teal-lt)}
+.side-tag{
+  display:inline-block;font-family:'Inter',sans-serif;font-size:8px;
+  letter-spacing:.32em;text-transform:uppercase;padding:5px 14px;margin-bottom:18px;border:1px solid;
+}
+.side-a .side-tag{color:var(--gold-lt);border-color:var(--gold-dim)}
 .side-b .side-tag{color:var(--teal-lt);border-color:var(--teal)}
-.side-panel h3{font-family:'EB Garamond',serif;font-size:22px;color:var(--ivory);margin-bottom:10px;font-weight:400}
-.side-panel p{font-size:14px;max-width:100%;margin-bottom:0}
+.side-panel h3{font-family:'EB Garamond',serif;font-size:24px;color:var(--ivory);margin-bottom:12px;font-weight:500}
+.side-panel p{font-size:14.5px;max-width:100%;margin-bottom:0;color:var(--muted)}
+.side-mini-wave{display:block;width:100%;height:34px;margin:18px 0 0}
+.side-mini-wave path{fill:none;stroke-width:1.4}
 
-/* RAGAS */
-.raga-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:36px;background:var(--border);border:1px solid var(--border)}
-.raga-cell{background:var(--bg2);padding:32px 24px;position:relative;overflow:hidden}
-.raga-cell::after{content:attr(data-dev);position:absolute;bottom:-12px;right:-8px;font-family:'Noto Serif Devanagari',serif;font-size:72px;color:var(--gold);opacity:0.04;line-height:1;pointer-events:none}
-.raga-bar{height:2px;margin-bottom:20px}
+/* ── RAGAS ── */
+.raga-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:40px;background:var(--border);border:1px solid var(--border)}
+.raga-cell{
+  background:var(--bg2);padding:36px 28px;position:relative;overflow:hidden;
+  transition:background .35s;
+}
+.raga-cell:hover{background:var(--bg3)}
+.raga-cell::after{
+  content:attr(data-dev);position:absolute;bottom:-18px;right:-10px;
+  font-family:'Noto Serif Devanagari',serif;font-size:96px;color:var(--gold);
+  opacity:.045;line-height:1;pointer-events:none;transition:opacity .35s,transform .5s;
+}
+.raga-cell:hover::after{opacity:.09;transform:translateY(-6px)}
+.raga-bar{height:2px;margin-bottom:24px;transform-origin:left;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .15s}
+.in .raga-bar{transform:scaleX(1)}
 .r1 .raga-bar{background:linear-gradient(90deg,var(--gold),transparent)}
 .r2 .raga-bar{background:linear-gradient(90deg,var(--teal-lt),transparent)}
 .r3 .raga-bar{background:linear-gradient(90deg,var(--vermil),transparent)}
-.raga-num{font-family:'Noto Serif Devanagari',serif;font-size:28px;line-height:1;margin-bottom:12px}
-.r1 .raga-num{color:var(--gold)}.r2 .raga-num{color:var(--teal-lt)}.r3 .raga-num{color:var(--vermil)}
-.raga-cell h3{font-family:'EB Garamond',serif;font-size:19px;color:var(--ivory);margin-bottom:4px;font-weight:400}
-.raga-dev{font-family:'Noto Serif Devanagari',serif;font-size:13px;color:var(--muted);margin-bottom:12px;display:block}
-.raga-cell p{font-size:13px;max-width:100%;color:var(--muted);margin-bottom:0}
+.raga-num{font-family:'Noto Serif Devanagari',serif;font-size:30px;line-height:1;margin-bottom:14px}
+.r1 .raga-num{color:var(--gold-lt)}.r2 .raga-num{color:var(--teal-lt)}.r3 .raga-num{color:var(--vermil-lt)}
+.raga-cell h3{font-family:'EB Garamond',serif;font-size:21px;color:var(--ivory);margin-bottom:4px;font-weight:500}
+.raga-dev{font-family:'Noto Serif Devanagari',serif;font-size:14px;color:var(--muted);margin-bottom:14px;display:block}
+.raga-cell p{font-size:13.5px;max-width:100%;color:var(--muted);margin-bottom:0;line-height:1.8}
 
-/* DATA */
-.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:36px;background:var(--border);border:1px solid var(--border)}
-.stat-cell{background:var(--bg2);padding:28px 24px;text-align:center}
-.stat-dev{font-family:'Noto Serif Devanagari',serif;font-size:11px;color:var(--gold);letter-spacing:0.1em;margin-bottom:12px;display:block}
-.stat-num{font-family:'EB Garamond',serif;font-size:52px;font-weight:400;color:var(--gold-lt);line-height:1;margin-bottom:8px}
-.stat-denom{font-size:22px;color:var(--muted)}
-.stat-label{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);line-height:1.5;letter-spacing:0.05em}
-.bars-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}
-.bars-group-label{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:18px}
+/* ── DATA ── */
+.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:40px;background:var(--border);border:1px solid var(--border)}
+.stat-cell{background:var(--bg2);padding:34px 26px;text-align:center;position:relative;overflow:hidden}
+.stat-cell::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:42px;height:2px;background:var(--gold-dim);
+}
+.stat-dev{font-family:'Noto Serif Devanagari',serif;font-size:12px;color:var(--gold);letter-spacing:.12em;margin-bottom:14px;display:block;opacity:.85}
+.stat-num{font-family:'EB Garamond',serif;font-size:58px;font-weight:500;color:var(--gold-lt);line-height:1;margin-bottom:10px;font-variant-numeric:tabular-nums}
+.stat-denom{font-size:24px;color:var(--muted)}
+.stat-label{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);line-height:1.6;letter-spacing:.06em}
+
+.bars-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px}
+.bars-group-label{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px}
 .bars-group-label.gold{color:var(--gold)}.bars-group-label.teal{color:var(--teal-lt)}
-.bar-row{margin-bottom:14px}
-.bar-label-row{display:flex;justify-content:space-between;margin-bottom:5px}
-.bar-label{font-size:13px;color:var(--ivory-dim)}.bar-val{font-size:13px;font-weight:500}
+.bar-row{margin-bottom:16px}
+.bar-label-row{display:flex;justify-content:space-between;margin-bottom:6px}
+.bar-label{font-size:13.5px;color:var(--ivory-dim)}
+.bar-val{font-family:'Inter',sans-serif;font-size:12px;font-weight:500}
 .bar-track{height:4px;background:var(--border);overflow:hidden}
-.bar-fill{height:100%}
-.words-section{margin-top:48px}
-.words-label{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:12px;margin-top:24px}
+.bar-fill{height:100%;width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1) .2s}
+.in .bar-fill{width:var(--w)}
+
+.words-section{margin-top:54px}
+.words-label{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.32em;text-transform:uppercase;margin-bottom:14px;margin-top:28px}
 .words-label.gold{color:var(--gold)}.words-label.teal{color:var(--teal-lt)}
-.word-cloud{display:flex;flex-wrap:wrap;gap:8px}
-.word-tag{font-family:'EB Garamond',serif;font-size:14px;padding:5px 14px;border:1px solid;letter-spacing:0.03em;font-style:italic}
-.word-tag.w-gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(200,136,26,0.06)}
-.word-tag.w-teal{color:var(--teal-lt);border-color:var(--teal);background:rgba(26,80,72,0.06)}
+.word-cloud{display:flex;flex-wrap:wrap;gap:9px}
+.word-tag{
+  font-family:'EB Garamond',serif;font-size:14.5px;padding:6px 16px;border:1px solid;
+  letter-spacing:.03em;font-style:italic;transition:transform .3s,background .3s;
+}
+.word-tag:hover{transform:translateY(-2px)}
+.word-tag.w-gold{color:var(--gold-lt);border-color:var(--gold-dim);background:rgba(200,136,26,.06)}
+.word-tag.w-gold:hover{background:rgba(200,136,26,.14)}
+.word-tag.w-teal{color:var(--teal-lt);border-color:var(--teal);background:rgba(29,90,82,.08)}
+.word-tag.w-teal:hover{background:rgba(29,90,82,.18)}
+.finding-callout{
+  margin-top:44px;padding:28px 32px;
+  border:1px solid var(--gold-dim);
+  background:linear-gradient(140deg,rgba(200,136,26,.07),transparent 70%);
+  position:relative;
+}
+.finding-callout::before{
+  content:'॥';position:absolute;top:14px;left:18px;
+  font-family:'Noto Serif Devanagari',serif;font-size:26px;color:var(--gold-dim);
+}
+.finding-callout p{
+  font-size:19px;font-style:italic;color:var(--ivory);
+  margin:0;max-width:100%;padding-left:36px;line-height:1.7;
+}
 
-/* INTERVIEW */
-.interview-block{margin-top:36px;border:1px solid var(--border);background:var(--bg2);overflow:hidden}
-.interview-header{padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
-.interview-person{background:var(--bg2);padding:24px 28px}
-.person-tradition{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:6px}
+/* ── INTERVIEW ── */
+.interview-block{margin-top:40px;border:1px solid var(--border);background:var(--bg2);overflow:hidden}
+.interview-header{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.interview-person{background:var(--bg2);padding:26px 30px;position:relative}
+.interview-person::after{
+  content:'';position:absolute;top:0;left:0;width:100%;height:2px;
+}
+.interview-person:first-child::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.interview-person:last-child::after{background:linear-gradient(90deg,var(--teal-lt),transparent)}
+.person-tradition{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:8px}
 .person-tradition.gold{color:var(--gold)}.person-tradition.teal{color:var(--teal-lt)}
-.interview-person h3{font-family:'EB Garamond',serif;font-size:20px;color:var(--ivory);font-weight:400;margin-bottom:4px}
-.interview-person .person-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif}
-.video-embed{width:100%;aspect-ratio:16/9;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.video-embed::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,136,26,0.04),transparent 70%)}
-.play-ring{width:64px;height:64px;border-radius:50%;border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);background:rgba(200,136,26,0.08);position:relative;z-index:1}
-.video-note{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);letter-spacing:0.12em;position:relative;z-index:1;text-align:center;line-height:1.7}
-.interview-caption{padding:20px 28px;font-size:14px;color:var(--muted);font-style:italic;font-family:'EB Garamond',serif}
+.interview-person h3{font-family:'EB Garamond',serif;font-size:22px;color:var(--ivory);font-weight:500;margin-bottom:4px}
+.person-sub{font-size:12.5px;color:var(--muted);font-family:'Inter',sans-serif;font-weight:300}
+.video-embed{
+  width:100%;aspect-ratio:16/9;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.video-embed::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(200,136,26,.05),transparent 65%);
+}
+.play-ring{
+  width:72px;height:72px;border-radius:50%;border:1px solid var(--gold-dim);
+  display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold-lt);
+  background:rgba(200,136,26,.08);position:relative;z-index:1;
+}
+.play-ring::after{
+  content:'';position:absolute;inset:-10px;border-radius:50%;
+  border:1px solid var(--gold-dim);opacity:.4;
+  animation:ringpulse 3s ease-out infinite;
+}
+@keyframes ringpulse{0%{transform:scale(.9);opacity:.5}100%{transform:scale(1.25);opacity:0}}
+.video-note{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.14em;position:relative;z-index:1;text-align:center;line-height:1.8}
+.interview-caption{padding:22px 30px;font-size:14.5px;color:var(--muted);font-style:italic}
 
-/* MINDMAP */
-.mindmap-frame{margin-top:36px;border:1px solid var(--border);background:var(--bg2);overflow:hidden}
-.mindmap-ph{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:var(--bg)}
-.mindmap-ph p{font-size:12px;color:var(--muted);text-align:center;max-width:360px;font-style:italic}
+/* ── MINDMAP ── */
+.mindmap-frame{margin-top:40px;border:1px solid var(--border);background:var(--bg2);overflow:hidden}
+.mindmap-ph{aspect-ratio:16/8;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:var(--bg)}
+.mindmap-ph p{font-size:12.5px;color:var(--muted);text-align:center;max-width:380px;font-style:italic;margin:0}
 
-/* DOCUMENTS */
-.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:36px;background:var(--border);border:1px solid var(--border)}
-.doc-cell{background:var(--bg2);display:flex;align-items:center;gap:16px;padding:20px 22px;text-decoration:none;transition:background 0.2s}
-.doc-cell:hover{background:rgba(200,136,26,0.06)}
-.doc-glyph{font-family:'Noto Serif Devanagari',serif;font-size:22px;color:var(--gold-dim);min-width:32px;text-align:center;flex-shrink:0}
-.doc-text .doc-title{font-size:14px;color:var(--ivory);margin-bottom:2px}
-.doc-text .doc-type{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)}
+/* ── DOCUMENTS ── */
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:40px;background:var(--border);border:1px solid var(--border)}
+.doc-cell{
+  background:var(--bg2);display:flex;align-items:center;gap:18px;padding:24px 26px;
+  text-decoration:none;transition:background .25s,padding-left .25s;position:relative;
+}
+.doc-cell::after{
+  content:'↓';position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  color:var(--gold-dim);font-size:14px;opacity:0;transition:opacity .25s;
+  font-family:'Inter',sans-serif;
+}
+.doc-cell:hover{background:rgba(200,136,26,.07);padding-left:32px}
+.doc-cell:hover::after{opacity:1}
+.doc-glyph{
+  font-family:'Noto Serif Devanagari',serif;font-size:24px;color:var(--gold-dim);
+  min-width:36px;text-align:center;flex-shrink:0;
+}
+.doc-title{font-size:15px;color:var(--ivory);margin-bottom:3px}
+.doc-type{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:3fr 2fr;gap:48px;margin-top:36px;align-items:start}
-.credit-block{padding:24px;border:1px solid var(--border);background:var(--bg)}
-.credit-section-label{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;margin-top:20px;opacity:0.7}
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:3fr 2fr;gap:56px;margin-top:40px;align-items:start}
+.credit-block{padding:28px;border:1px solid var(--border);background:var(--bg)}
+.credit-section-label{
+  font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;margin-top:22px;opacity:.75;
+  display:flex;align-items:center;gap:10px;
+}
+.credit-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 .credit-section-label:first-child{margin-top:0}
-.credit-line{font-size:13px;color:var(--muted);margin-bottom:4px;line-height:1.6;font-family:'EB Garamond',serif}
+.credit-line{font-size:13.5px;color:var(--muted);margin-bottom:5px;line-height:1.65}
 .credit-line strong{color:var(--ivory-dim);font-weight:400}
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;z-index:1}
-footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
-.footer-brand{font-family:'Noto Serif Devanagari',serif;font-size:18px;color:var(--gold);letter-spacing:0.08em}
-.footer-meta{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);letter-spacing:0.15em;text-align:right;line-height:1.8}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  nav{padding:0 20px}.nav-links{display:none}
-  .hero-inner{grid-template-columns:1fr;gap:40px;padding:0 24px}
-  .section-wrap{padding:60px 24px}
-  .sides-container,.raga-trio,.data-grid,.interview-header,.bars-wrap,.doc-grid,.about-grid{grid-template-columns:1fr}
-  footer{padding:24px;flex-direction:column;text-align:center}.footer-meta{text-align:center}
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);padding:34px 64px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  position:relative;z-index:1;
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+footer::before{
+  content:'';position:absolute;top:-1px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim) 50%,transparent);
+}
+.footer-brand{font-family:'Noto Serif Devanagari',serif;font-size:19px;color:var(--gold);letter-spacing:.08em}
+.footer-meta{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.16em;text-align:right;line-height:1.9}
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  nav{padding:0 22px}.nav-links{display:none}
+  .hero-inner{grid-template-columns:1fr;gap:44px;padding:0 26px}
+  .mandala-wrap{right:-260px;opacity:.7}
+  .section-wrap{padding:70px 26px}
+  .wave-caption{padding:0 26px}
+  .sides-container,.raga-trio,.data-grid,.interview-header,.bars-wrap,.doc-grid,.about-grid{grid-template-columns:1fr}
+  .side-panel.side-a{border-right:none;border-bottom:1px solid var(--border)}
+  footer{padding:26px 22px;flex-direction:column;text-align:center}
+  .footer-meta{text-align:center}
+  .scroll-hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .bar-fill{width:var(--w)}
+  .raga-bar{transform:scaleX(1)}
+  .meend-wave path{stroke-dashoffset:0}
+}
 </style>
 </head>
 <body>
@@ -174,129 +419,261 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <a href="#documents">Documents</a>
     <a href="#about">About</a>
   </div>
+  <div id="scroll-progress"></div>
 </nav>
 
-<!-- HERO -->
+<!-- ════ HERO ════ -->
 <section id="hero">
-  <svg class="mandala-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none" stroke="#c8881a" stroke-width="0.6">
-      <circle cx="250" cy="250" r="235"/><circle cx="250" cy="250" r="195"/><circle cx="250" cy="250" r="155"/><circle cx="250" cy="250" r="115"/><circle cx="250" cy="250" r="75"/><circle cx="250" cy="250" r="35"/>
-      <g transform="translate(250,250)">
-        <ellipse rx="18" ry="56" transform="rotate(0) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(30) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(60) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(90) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(120) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(150) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(180) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(210) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(240) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(270) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(300) translate(0,-175)"/><ellipse rx="18" ry="56" transform="rotate(330) translate(0,-175)"/>
-        <ellipse rx="10" ry="32" transform="rotate(15) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(45) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(75) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(105) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(135) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(165) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(195) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(225) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(255) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(285) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(315) translate(0,-115)"/><ellipse rx="10" ry="32" transform="rotate(345) translate(0,-115)"/>
-        <line x1="0" y1="-235" x2="0" y2="235"/><line x1="0" y1="-235" x2="0" y2="235" transform="rotate(30)"/><line x1="0" y1="-235" x2="0" y2="235" transform="rotate(60)"/><line x1="0" y1="-235" x2="0" y2="235" transform="rotate(90)"/><line x1="0" y1="-235" x2="0" y2="235" transform="rotate(120)"/><line x1="0" y1="-235" x2="0" y2="235" transform="rotate(150)"/>
+  <div class="mandala-wrap mandala-breathe">
+    <svg class="mandala" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#c8881a" stroke-width=".6">
+        <circle cx="250" cy="250" r="238"/><circle cx="250" cy="250" r="206"/>
+        <circle cx="250" cy="250" r="170"/><circle cx="250" cy="250" r="132"/>
+        <circle cx="250" cy="250" r="92"/><circle cx="250" cy="250" r="50"/>
+        <g transform="translate(250,250)">
+          <g id="pl">
+            <ellipse rx="19" ry="58" cy="-178"/>
+          </g>
+          <use href="#pl" transform="rotate(30)"/><use href="#pl" transform="rotate(60)"/>
+          <use href="#pl" transform="rotate(90)"/><use href="#pl" transform="rotate(120)"/>
+          <use href="#pl" transform="rotate(150)"/><use href="#pl" transform="rotate(180)"/>
+          <use href="#pl" transform="rotate(210)"/><use href="#pl" transform="rotate(240)"/>
+          <use href="#pl" transform="rotate(270)"/><use href="#pl" transform="rotate(300)"/>
+          <use href="#pl" transform="rotate(330)"/>
+          <g id="pl2"><ellipse rx="11" ry="34" cy="-114"/></g>
+          <use href="#pl2" transform="rotate(15)"/><use href="#pl2" transform="rotate(45)"/>
+          <use href="#pl2" transform="rotate(75)"/><use href="#pl2" transform="rotate(105)"/>
+          <use href="#pl2" transform="rotate(135)"/><use href="#pl2" transform="rotate(165)"/>
+          <use href="#pl2" transform="rotate(195)"/><use href="#pl2" transform="rotate(225)"/>
+          <use href="#pl2" transform="rotate(255)"/><use href="#pl2" transform="rotate(285)"/>
+          <use href="#pl2" transform="rotate(315)"/><use href="#pl2" transform="rotate(345)"/>
+          <line x1="0" y1="-238" x2="0" y2="238"/>
+          <line x1="0" y1="-238" x2="0" y2="238" transform="rotate(30)"/>
+          <line x1="0" y1="-238" x2="0" y2="238" transform="rotate(60)"/>
+          <line x1="0" y1="-238" x2="0" y2="238" transform="rotate(90)"/>
+          <line x1="0" y1="-238" x2="0" y2="238" transform="rotate(120)"/>
+          <line x1="0" y1="-238" x2="0" y2="238" transform="rotate(150)"/>
+        </g>
       </g>
-    </g>
-  </svg>
+    </svg>
+    <svg class="mandala mandala-inner" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#bf4422" stroke-width=".7">
+        <circle cx="150" cy="150" r="140"/><circle cx="150" cy="150" r="100"/><circle cx="150" cy="150" r="60"/>
+        <g transform="translate(150,150)">
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(45)"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(90)"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(135)"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(180)"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(225)"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(270)"/>
+          <path d="M0,-140 L24,-100 L0,-60 L-24,-100 Z" transform="rotate(315)"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
   <div class="hero-inner">
-    <div class="hero-left">
+    <div class="reveal in">
       <div class="hero-eyebrow">Audio-Visual Installation · Carnegie Library, Dun Laoghaire · 2026</div>
       <div class="hero-dev">अन्तर</div>
       <div class="hero-latin">ANTARA</div>
       <div class="hero-tagline">Between the Notes</div>
-      <p class="hero-statement">A raga is not its notes. It lives in the bends, the oscillations, the microtonal gestures that exist between fixed pitches. Walk around the structure. That walk is the argument.</p>
+      <p class="hero-statement">
+        A raga is not its notes. It lives in the bends, the oscillations,
+        the microtonal gestures that exist between fixed pitches.
+        <em>Walk around the structure. That walk is the argument.</em>
+      </p>
     </div>
-    <div class="hero-right">
-      <div class="hero-meta-card"><div class="meta-label">Artist</div><div class="meta-value">Abhinav K Jayan</div></div>
-      <div class="hero-meta-card"><div class="meta-label">Programme</div><div class="meta-value">FilmEU Resound · Masters in Sound</div></div>
-      <div class="hero-meta-card"><div class="meta-label">Ragas</div><div class="meta-value">दरबारी कानडा · जोग · काफी</div></div>
-      <div class="hero-meta-card"><div class="meta-label">Listener Responses</div><div class="meta-value">20 · Average age 42.9</div></div>
-      <div class="hero-meta-card"><div class="meta-label">Musicians Interviewed</div><div class="meta-value">Paulson K J · Abhay Nayampally</div></div>
+    <div class="hero-meta reveal in d2">
+      <div class="hero-meta-row"><span class="hm-label">Artist</span><span class="hm-value">Abhinav K Jayan</span></div>
+      <div class="hero-meta-row"><span class="hm-label">Programme</span><span class="hm-value">FilmEU Resound · Masters in Sound</span></div>
+      <div class="hero-meta-row"><span class="hm-label">Ragas</span><span class="hm-value dev">दरबारी कानडा · जोग · काफी</span></div>
+      <div class="hero-meta-row"><span class="hm-label">Responses</span><span class="hm-value">20 listeners · avg age 42.9</span></div>
+      <div class="hero-meta-row"><span class="hm-label">Interviews</span><span class="hm-value">Paulson K J · Abhay Nayampally</span></div>
     </div>
   </div>
+  <div class="scroll-hint">Scroll</div>
 </section>
 
-<div class="geo-band"></div>
+<!-- ════ SIGNATURE WAVE: meend → quantized ════ -->
+<svg class="meend-wave reveal" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="waveg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#eab548"/>
+      <stop offset=".48" stop-color="#c8881a"/>
+      <stop offset=".55" stop-color="#3d8a7a"/>
+      <stop offset="1" stop-color="#1d5a52"/>
+    </linearGradient>
+  </defs>
+  <path stroke="url(#waveg)" d="M0,45
+    C30,20 55,70 85,45 C110,25 130,68 160,46 C195,18 225,75 260,45
+    C290,22 318,66 350,44 C385,20 420,72 455,45 C490,25 525,62 560,45
+    L600,45
+    L600,28 L640,28 L640,58 L680,58 L680,22 L720,22 L720,52 L760,52
+    L760,32 L800,32 L800,62 L840,62 L840,26 L880,26 L880,55 L920,55
+    L920,34 L960,34 L960,60 L1000,60 L1000,28 L1040,28 L1040,52 L1080,52
+    L1080,36 L1120,36 L1120,58 L1160,58 L1160,40 L1200,40"/>
+</svg>
+<div class="wave-caption">
+  <span class="wc-a">Continuous pitch — meend</span>
+  <span class="wc-b">Equal temperament — quantized</span>
+</div>
 
-<!-- INSTALLATION -->
+<!-- ════ INSTALLATION ════ -->
 <section id="installation" style="background:var(--bg2)">
   <div class="section-wrap">
-    <div class="eyebrow">The Installation</div>
-    <h2>One melody. Two instruments.<br><span class="dev-inline">एक स्वर, दो रूप।</span></h2>
-    <p>Antara was presented at Carnegie Library, Dun Laoghaire, in a hall with high ceilings and wooden floors — 22 by 19 feet, 14 feet high. At the centre stood a freestanding double-sided structure carrying two paintings and two speakers, one facing each half of the room.</p>
-    <p>The paintings depicted Goddess Saraswati in two forms: one in fluid, curved brushwork mirroring the continuous motion of microtonal ornamentation; the other a cubist fragmentation of the same image. Beneath, a peacock blue silk saree was draped in a wave shape. The floor carried a maroon carpet with intricate symmetric patterns. Electric candles and lamps created the meditative atmosphere the music required.</p>
-    <div class="sides-container">
-      <div class="side-panel side-a">
+    <div class="eyebrow reveal">The Installation</div>
+    <h2 class="reveal">One melody. Two instruments.<br><span class="dev-inline">एक स्वर, दो रूप।</span></h2>
+    <p class="reveal d1">
+      Antara was presented at Carnegie Library, Dun Laoghaire, in a hall with high ceilings
+      and wooden floors — 22 by 19 feet, 14 feet high. At the centre stood a freestanding
+      double-sided structure carrying two paintings and two speakers, one facing each half of the room.
+    </p>
+    <p class="reveal d2">
+      The paintings depicted Goddess Saraswati in two forms: one in fluid, curved brushwork
+      mirroring the continuous motion of microtonal ornamentation; the other a cubist fragmentation
+      of the same image. Beneath, a peacock blue silk saree was draped in a wave shape.
+      The floor carried a maroon carpet with intricate symmetric patterns. Electric candles
+      and lamps created the meditative atmosphere the music required.
+    </p>
+
+    <div class="sides-container reveal d2">
+      <div class="side-panel side-a" data-glyph="बाँ">
         <div class="side-tag">Side A · बाँसुरी</div>
         <h3>Flute — Microtonal</h3>
-        <p>Bansuri flute with full microtonal ornamentation. Meend, andolan, gamaka intact. The raga breathes through continuous pitch movement. The melody lives.</p>
+        <p>Bansuri with full microtonal ornamentation. Meend, andolan, gamaka intact.
+        The raga breathes through continuous pitch movement. The melody lives.</p>
+        <svg class="side-mini-wave" viewBox="0 0 300 34" preserveAspectRatio="none">
+          <path stroke="#c8881a" opacity=".55" d="M0,17 C20,4 38,30 58,17 C78,6 95,28 115,17 C138,4 160,30 182,17 C202,6 220,28 240,17 C260,6 280,26 300,17"/>
+        </svg>
       </div>
-      <div class="side-panel side-b">
+      <div class="side-panel side-b" data-glyph="की">
         <div class="side-tag">Side B · कीज़</div>
         <h3>Keys — Equal Temperament</h3>
-        <p>The same melody on piano. Every note a fixed, equal-tempered point. No bends, no glides, no oscillation. The notes without their motion.</p>
+        <p>The same melody on piano. Every note a fixed, equal-tempered point.
+        No bends, no glides, no oscillation. The notes without their motion.</p>
+        <svg class="side-mini-wave" viewBox="0 0 300 34" preserveAspectRatio="none">
+          <path stroke="#3d8a7a" opacity=".55" d="M0,17 L0,8 L30,8 L30,24 L60,24 L60,10 L90,10 L90,22 L120,22 L120,8 L150,8 L150,24 L180,24 L180,12 L210,12 L210,22 L240,22 L240,9 L270,9 L270,20 L300,20"/>
+        </svg>
       </div>
     </div>
-    <div class="ornament">✦ ॐ ✦</div>
-    <p>A Z Game Audio Visualizer running in FL Studio changed the ambient light colour with each raga, giving a visual cue without naming what was playing. A screen showed interview footage. An iPad with GeoShred and a physical flute invited visitors to feel the difference themselves.</p>
+
+    <div class="ornament reveal">✦ ॐ ✦</div>
+    <p class="reveal">
+      A Z Game Audio Visualizer running in FL Studio changed the ambient light colour with each raga,
+      giving a visual cue without naming what was playing. A screen showed interview footage.
+      An iPad with GeoShred and a physical flute invited visitors to feel the difference themselves.
+    </p>
   </div>
 </section>
 
-<div class="geo-band-thin"></div>
-<hr class="section-divider">
-
-<!-- RAGAS -->
+<!-- ════ RAGAS ════ -->
 <section id="ragas">
   <div class="section-wrap">
-    <div class="eyebrow">The Three Ragas · तीन राग</div>
-    <h2>Each chosen for a different emotional world.</h2>
-    <p>Three melodic frameworks from Indian classical music, each representing a distinct register and a different argument about what microtonal identity means.</p>
-    <div class="raga-trio">
+    <div class="eyebrow reveal">The Three Ragas · तीन राग</div>
+    <h2 class="reveal">Each chosen for a different emotional world.</h2>
+    <p class="reveal d1">
+      Three melodic frameworks from Indian classical music, each representing a distinct register
+      and a different argument about what microtonal identity means.
+    </p>
+    <div class="raga-trio reveal d2">
       <div class="raga-cell r1" data-dev="द">
         <div class="raga-bar"></div>
         <div class="raga-num">I</div>
         <h3>Darbari Kanada</h3>
         <span class="raga-dev">दरबारी कानडा</span>
-        <p>Heavy, late-night, deeply serious. Its notes are almost identical to a Western major scale — yet it sounds nothing like one. Its identity rests entirely on the slow andolan of the flattened third and sixth.</p>
+        <p>Heavy, late-night, deeply serious. Its notes are almost identical to a Western
+        major scale — yet it sounds nothing like one. Its identity rests entirely on the slow
+        andolan of the flattened third and sixth. Remove those oscillations, and the raga disappears.</p>
       </div>
       <div class="raga-cell r2" data-dev="ज">
         <div class="raga-bar"></div>
         <div class="raga-num">II</div>
         <h3>Raga Jog</h3>
         <span class="raga-dev">राग जोग</span>
-        <p>Pentatonic and deeply touching, using both a flattened and natural third. Specific rules govern how notes are approached ascending versus descending. Those rules are what give Jog its distinctive feel.</p>
+        <p>Pentatonic and deeply touching, using both a flattened and natural third.
+        Specific rules govern how notes are approached ascending versus descending.
+        Those rules are what give Jog its distinctive feel.</p>
       </div>
       <div class="raga-cell r3" data-dev="क">
         <div class="raga-bar"></div>
         <div class="raga-num">III</div>
         <h3>Raga Kafi</h3>
         <span class="raga-dev">राग काफी</span>
-        <p>A third emotional world, providing contrast against both the gravity of Darbari and the intimacy of Jog. Its microtonal character produced the most stark perceptual contrast in audience responses.</p>
+        <p>A third emotional world, providing contrast against both the gravity of Darbari
+        and the intimacy of Jog. Its microtonal character produced the most stark perceptual
+        contrast between the two sides in audience responses.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="geo-band-thin"></div>
-<hr class="section-divider">
-
-<!-- RESEARCH -->
+<!-- ════ RESEARCH ════ -->
 <section id="research" style="background:var(--bg2)">
   <div class="section-wrap">
-    <div class="eyebrow">Audience Response · श्रोताओं की प्रतिक्रिया</div>
-    <h2>What twenty listeners heard.</h2>
-    <p>Visitors completed structured response forms comparing the flute and keys sides across the three ragas. Twenty responses were collected. Seventeen respondents were musicians; three were non-musicians. Age range 25 to 66 years.</p>
-    <div class="data-grid">
-      <div class="stat-cell"><span class="stat-dev">अभिव्यक्ति</span><div class="stat-num">18<span class="stat-denom">/20</span></div><div class="stat-label">Identified the flute side as more emotionally expressive</div></div>
-      <div class="stat-cell"><span class="stat-dev">श्रुति</span><div class="stat-num">19<span class="stat-denom">/20</span></div><div class="stat-label">Clearly noticed pitch bending on the flute side</div></div>
-      <div class="stat-cell"><span class="stat-dev">आयु</span><div class="stat-num">42.9</div><div class="stat-label">Average age of respondents across all three ragas</div></div>
+    <div class="eyebrow reveal">Audience Response · श्रोताओं की प्रतिक्रिया</div>
+    <h2 class="reveal">What twenty listeners heard.</h2>
+    <p class="reveal d1">
+      Visitors completed structured response forms comparing the flute and keys sides across
+      the three ragas. Twenty responses were collected. Seventeen respondents were musicians;
+      three were non-musicians. Age range 25 to 66 years.
+    </p>
+
+    <div class="data-grid reveal d2">
+      <div class="stat-cell">
+        <span class="stat-dev">अभिव्यक्ति</span>
+        <div class="stat-num"><span class="count" data-to="18">0</span><span class="stat-denom">/20</span></div>
+        <div class="stat-label">Identified the flute side as more emotionally expressive</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-dev">श्रुति</span>
+        <div class="stat-num"><span class="count" data-to="19">0</span><span class="stat-denom">/20</span></div>
+        <div class="stat-label">Clearly noticed pitch bending on the flute side</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-dev">आयु</span>
+        <div class="stat-num"><span class="count" data-to="42.9" data-dec="1">0</span></div>
+        <div class="stat-label">Average age of respondents across all three ragas</div>
+      </div>
     </div>
-    <div class="bars-wrap">
+
+    <div class="bars-wrap reveal">
       <div>
         <div class="bars-group-label gold">Pitch Bending — Flute Side</div>
-        <div class="bar-row"><div class="bar-label-row"><span class="bar-label">Yes, clearly</span><span class="bar-val" style="color:var(--gold)">19</span></div><div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--gold)"></div></div></div>
-        <div class="bar-row"><div class="bar-label-row"><span class="bar-label">A little</span><span class="bar-val" style="color:var(--gold)">1</span></div><div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--gold)"></div></div></div>
-        <div class="bar-row"><div class="bar-label-row"><span class="bar-label">Not really</span><span class="bar-val" style="color:var(--gold)">0</span></div><div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--gold)"></div></div></div>
+        <div class="bar-row">
+          <div class="bar-label-row"><span class="bar-label">Yes, clearly</span><span class="bar-val" style="color:var(--gold-lt)">19</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:95%;background:linear-gradient(90deg,var(--gold),var(--gold-lt))"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label-row"><span class="bar-label">A little</span><span class="bar-val" style="color:var(--gold-lt)">1</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:5%;background:var(--gold)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label-row"><span class="bar-label">Not really</span><span class="bar-val" style="color:var(--gold-lt)">0</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:0%;background:var(--gold)"></div></div>
+        </div>
       </div>
       <div>
         <div class="bars-group-label teal">Pitch Bending — Keys Side</div>
-        <div class="bar-row"><div class="bar-label-row"><span class="bar-label">Yes, clearly</span><span class="bar-val" style="color:var(--teal-lt)">3</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;background:var(--teal-lt)"></div></div></div>
-        <div class="bar-row"><div class="bar-label-row"><span class="bar-label">A little</span><span class="bar-val" style="color:var(--teal-lt)">7</span></div><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--teal-lt)"></div></div></div>
-        <div class="bar-row"><div class="bar-label-row"><span class="bar-label">Not really</span><span class="bar-val" style="color:var(--teal-lt)">10</span></div><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--teal-lt)"></div></div></div>
+        <div class="bar-row">
+          <div class="bar-label-row"><span class="bar-label">Yes, clearly</span><span class="bar-val" style="color:var(--teal-lt)">3</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:15%;background:var(--teal-lt)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label-row"><span class="bar-label">A little</span><span class="bar-val" style="color:var(--teal-lt)">7</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:35%;background:var(--teal-lt)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label-row"><span class="bar-label">Not really</span><span class="bar-val" style="color:var(--teal-lt)">10</span></div>
+          <div class="bar-track"><div class="bar-fill" style="--w:50%;background:linear-gradient(90deg,var(--teal),var(--teal-lt))"></div></div>
+        </div>
       </div>
     </div>
-    <div class="words-section">
-      <p style="margin-top:8px">The one-word responses produced the clearest evidence of divergent experience. The two vocabularies did not cross at all.</p>
+
+    <div class="words-section reveal">
+      <p>The one-word responses produced the clearest evidence of divergent experience.
+      The two vocabularies did not cross at all.</p>
       <div class="words-label gold">Flute Side — बाँसुरी</div>
       <div class="word-cloud">
         <span class="word-tag w-gold">Emotional</span><span class="word-tag w-gold">Moving</span><span class="word-tag w-gold">Spiritual</span><span class="word-tag w-gold">Transcendent</span><span class="word-tag w-gold">Human</span><span class="word-tag w-gold">Breath</span><span class="word-tag w-gold">Fluid</span><span class="word-tag w-gold">Whispering</span><span class="word-tag w-gold">Ethereal</span><span class="word-tag w-gold">Mysterious</span><span class="word-tag w-gold">Calming</span><span class="word-tag w-gold">Dynamic</span><span class="word-tag w-gold">Morning</span><span class="word-tag w-gold">Introspective</span>
@@ -306,18 +683,24 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <span class="word-tag w-teal">Mechanical</span><span class="word-tag w-teal">Anxious</span><span class="word-tag w-teal">Static</span><span class="word-tag w-teal">Harsh</span><span class="word-tag w-teal">Distant</span><span class="word-tag w-teal">Sharp</span><span class="word-tag w-teal">Clean</span><span class="word-tag w-teal">Experimental</span><span class="word-tag w-teal">Transient</span><span class="word-tag w-teal">Ear Candy</span><span class="word-tag w-teal">Jazzy</span><span class="word-tag w-teal">Light</span><span class="word-tag w-teal">Explorative</span><span class="word-tag w-teal">Mechanics</span>
       </div>
     </div>
+
+    <div class="finding-callout reveal">
+      <p>Nobody used the word Human for the keys side. Nobody used Mechanical for the flute side.
+      The same melody, played two ways, produced two vocabularies that never touched.</p>
+    </div>
   </div>
 </section>
 
-<div class="geo-band"></div>
-
-<!-- INTERVIEWS -->
+<!-- ════ INTERVIEWS ════ -->
 <section id="interviews">
   <div class="section-wrap">
-    <div class="eyebrow">The Interviews · साक्षात्कार</div>
-    <h2>Two musicians. Two traditions.<br>The same question.</h2>
-    <p>Ninety-minute structured interviews with two practising musicians, each including live demonstrations. Both sessions are compiled into a single video document.</p>
-    <div class="interview-block">
+    <div class="eyebrow reveal">The Interviews · साक्षात्कार</div>
+    <h2 class="reveal">Two musicians. Two traditions.<br>The same question.</h2>
+    <p class="reveal d1">
+      Ninety-minute structured interviews with two practising musicians, each including
+      live demonstrations. Both sessions are compiled into a single video document.
+    </p>
+    <div class="interview-block reveal d2">
       <div class="interview-header">
         <div class="interview-person">
           <div class="person-tradition gold">Hindustani Classical · Sitar · सितार</div>
@@ -331,77 +714,95 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         </div>
       </div>
       <div class="video-embed">
-        <!-- REPLACE THIS BLOCK WITH YOUR YOUTUBE/VIMEO IFRAME -->
-        <!-- Example: <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
+        <!-- REPLACE THIS BLOCK WITH YOUR YOUTUBE / VIMEO IFRAME -->
+        <!-- e.g. <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Antara Interviews" frameborder="0" allowfullscreen style="position:absolute;inset:0"></iframe> -->
         <div class="play-ring">▶</div>
-        <div class="video-note">Combined interview video — Paulson K J & Abhay Nayampally<br>Replace this block with your YouTube or Vimeo embed code</div>
+        <div class="video-note">Combined interview film — Paulson K J &amp; Abhay Nayampally<br>Replace this block with your YouTube or Vimeo embed code</div>
       </div>
-      <div class="interview-caption">Conversations covering raga identity, the constitutive role of meend and andolan, the Carnatic gamaka system, and cross-traditional performance on non-traditional instruments.</div>
+      <div class="interview-caption">
+        Conversations covering raga identity, the constitutive role of meend and andolan,
+        the Carnatic gamaka system, and cross-traditional performance on non-traditional instruments.
+      </div>
     </div>
   </div>
 </section>
 
-<div class="geo-band-thin"></div>
-<hr class="section-divider">
-
-<!-- MINDMAP -->
+<!-- ════ MINDMAP ════ -->
 <section id="mindmap" style="background:var(--bg2)">
   <div class="section-wrap">
-    <div class="eyebrow">Research Mind Map · विचार-मानचित्र</div>
-    <h2>How the ideas connect.</h2>
-    <p>The conceptual structure of the research, mapping relationships between raga identity, microtonal articulation, ornament theory, and installation methodology.</p>
-    <div class="mindmap-frame">
-      <!-- REPLACE with: <img src="mindmap.png" style="width:100%;display:block"> after exporting from MindMup -->
+    <div class="eyebrow reveal">Research Mind Map · विचार-मानचित्र</div>
+    <h2 class="reveal">How the ideas connect.</h2>
+    <p class="reveal d1">
+      The conceptual structure of the research, mapping relationships between raga identity,
+      microtonal articulation, ornament theory, and installation methodology.
+    </p>
+    <div class="mindmap-frame reveal d2">
+      <!-- REPLACE with: <img src="mindmap.png" alt="Antara research mind map" style="width:100%;display:block"> -->
       <div class="mindmap-ph">
-        <div style="font-family:'Noto Serif Devanagari',serif;font-size:40px;color:var(--gold-dim);opacity:0.4">✦</div>
-        <p>Export your MindMup map as PNG, save as <strong>mindmap.png</strong> in the same folder, then replace this block with an img tag.</p>
+        <div style="font-family:'Noto Serif Devanagari',serif;font-size:42px;color:var(--gold-dim);opacity:.45">✦</div>
+        <p>Export your MindMup map as PNG, save it as <strong>mindmap.png</strong> beside this file,
+        then replace this block with an img tag.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="geo-band-thin"></div>
-<hr class="section-divider">
-
-<!-- DOCUMENTS -->
+<!-- ════ DOCUMENTS ════ -->
 <section id="documents">
   <div class="section-wrap">
-    <div class="eyebrow">Documents · दस्तावेज़</div>
-    <h2>Supporting materials.</h2>
-    <p>All research documents available below. Upload files to a <strong>files/</strong> folder in your GitHub repository and update the links accordingly.</p>
-    <div class="doc-grid">
-      <a class="doc-cell" href="files/ANTARA_Research_Report.docx"><div class="doc-glyph">ग्र</div><div class="doc-text"><div class="doc-title">Research Report</div><div class="doc-type">Ragas & Microtonal Articulations · DOCX</div></div></a>
-      <a class="doc-cell" href="files/ANTARA_Installation_Report.docx"><div class="doc-glyph">स्थ</div><div class="doc-text"><div class="doc-title">Installation Report</div><div class="doc-type">Antara — Between the Notes · DOCX</div></div></a>
-      <a class="doc-cell" href="files/ANTARA_Questionnaire.pdf"><div class="doc-glyph">प्र</div><div class="doc-text"><div class="doc-title">Audience Response Form</div><div class="doc-type">Listener Questionnaire · PDF</div></div></a>
-      <a class="doc-cell" href="files/Antara_Quessionaire.xlsx"><div class="doc-glyph">आं</div><div class="doc-text"><div class="doc-title">Response Data</div><div class="doc-type">20 Responses · XLSX</div></div></a>
-      <a class="doc-cell" href="files/ANTARA_Interview_Guide_Paulson.pdf"><div class="doc-glyph">सि</div><div class="doc-text"><div class="doc-title">Interview Guide — Paulson K J</div><div class="doc-type">Hindustani Classical · PDF</div></div></a>
-      <a class="doc-cell" href="files/ANTARA_Interview_Guide_Abhay.pdf"><div class="doc-glyph">गि</div><div class="doc-text"><div class="doc-title">Interview Guide — Abhay Nayampally</div><div class="doc-type">Carnatic Classical · PDF</div></div></a>
+    <div class="eyebrow reveal">Documents · दस्तावेज़</div>
+    <h2 class="reveal">Supporting materials.</h2>
+    <p class="reveal d1">
+      All research documents are available below. Upload the files to a <strong>files/</strong> folder
+      in your GitHub repository so these links resolve.
+    </p>
+    <div class="doc-grid reveal d2">
+      <a class="doc-cell" href="files/ANTARA_Research_Report.docx">
+        <div class="doc-glyph">ग्र</div>
+        <div><div class="doc-title">Research Report</div><div class="doc-type">Ragas &amp; Microtonal Articulations · DOCX</div></div>
+      </a>
+      <a class="doc-cell" href="files/ANTARA_Installation_Report.docx">
+        <div class="doc-glyph">स्थ</div>
+        <div><div class="doc-title">Installation Report</div><div class="doc-type">Antara — Between the Notes · DOCX</div></div>
+      </a>
+      <a class="doc-cell" href="files/ANTARA_Questionnaire.pdf">
+        <div class="doc-glyph">प्र</div>
+        <div><div class="doc-title">Audience Response Form</div><div class="doc-type">Listener Questionnaire · PDF</div></div>
+      </a>
+      <a class="doc-cell" href="files/Antara_Quessionaire.xlsx">
+        <div class="doc-glyph">आं</div>
+        <div><div class="doc-title">Response Data</div><div class="doc-type">20 Responses · XLSX</div></div>
+      </a>
     </div>
   </div>
 </section>
 
-<div class="geo-band"></div>
-
-<!-- ABOUT -->
+<!-- ════ ABOUT ════ -->
 <section id="about" style="background:var(--bg2)">
   <div class="section-wrap">
-    <div class="eyebrow">About · परिचय</div>
-    <h2>Abhinav K Jayan</h2>
+    <div class="eyebrow reveal">About · परिचय</div>
+    <h2 class="reveal">Abhinav K Jayan</h2>
     <div class="about-grid">
-      <div>
-        <p>Music producer and sound engineer pursuing an Erasmus Mundus Joint Masters in Sound through the FilmEU Resound programme, studying across Dublin, Lisbon, and Vilnius. Previously trained at FTII in sound recording and design.</p>
-        <p>Antara grew from a longstanding fascination with Indian classical music and the spaces between notes — the microtonal world that no Western notation system fully captures. This project was the first attempt to make that world audible to anyone willing to walk through it.</p>
-        <p style="margin-top:8px"><a href="mailto:" style="color:var(--gold);text-decoration:none;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase">Get in touch ↗</a></p>
+      <div class="reveal d1">
+        <p>Music producer and sound engineer pursuing an Erasmus Mundus Joint Masters in Sound
+        through the FilmEU Resound programme, studying across Dublin, Lisbon, and Vilnius.
+        Previously trained at FTII in sound recording and design.</p>
+        <p>Antara grew from a longstanding fascination with Indian classical music and the spaces
+        between notes — the microtonal world that no Western notation system fully captures.
+        This project was the first attempt to make that world audible to anyone willing to walk through it.</p>
+        <p style="margin-top:10px">
+          <a href="mailto:" style="color:var(--gold-lt);text-decoration:none;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase">Get in touch ↗</a>
+        </p>
       </div>
-      <div class="credit-block">
+      <div class="credit-block reveal d2">
         <div class="credit-section-label">Musicians</div>
         <div class="credit-line"><strong>Paulson K J</strong> — Hindustani Sitarist, Thrissur</div>
         <div class="credit-line"><strong>Abhay Nayampally</strong> — Carnatic Guitarist, Bengaluru</div>
-        <div class="credit-section-label">Visual & Video</div>
-        <div class="credit-line"><strong>Hrithwik Paresh</strong> — Cubist painting & interview editing</div>
+        <div class="credit-section-label">Visual &amp; Video</div>
+        <div class="credit-line"><strong>Hrithwik Paresh</strong> — Cubist painting &amp; interview editing</div>
         <div class="credit-section-label">Installation Support</div>
         <div class="credit-line"><strong>Deirdre Walsh</strong> — Carnegie Library, Dun Laoghaire</div>
-        <div class="credit-line"><strong>Stephen O Brien & Claire Burke</strong> — IADT</div>
+        <div class="credit-line"><strong>Stephen O Brien &amp; Claire Burke</strong> — IADT</div>
         <div class="credit-line"><strong>Conor Brennan</strong> — Course Coordinator</div>
         <div class="credit-section-label">Colleagues</div>
         <div class="credit-line">Alejandra · Diego · Pritom · Olivia</div>
@@ -416,6 +817,52 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="footer-brand">अन्तर · ANTARA</div>
   <div class="footer-meta">Between the Notes · FilmEU Resound<br>Abhinav K Jayan · 2026</div>
 </footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll progress */
+  var bar = document.getElementById('scroll-progress');
+  function prog(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = p + '%';
+  }
+  document.addEventListener('scroll', prog, {passive:true}); prog();
+
+  /* reveal on scroll */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        /* counters inside revealed element */
+        e.target.querySelectorAll('.count').forEach(animateCount);
+        if(e.target.classList.contains('count')) animateCount(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* counters */
+  function animateCount(el){
+    if(el.dataset.done) return;
+    el.dataset.done = '1';
+    var to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec||'0');
+    if(reduced){ el.textContent = to.toFixed(dec); return; }
+    var start = null, dur = 1600;
+    function step(ts){
+      if(!start) start = ts;
+      var t = Math.min((ts-start)/dur, 1);
+      var eased = 1 - Math.pow(1-t, 3);
+      el.textContent = (to*eased).toFixed(dec);
+      if(t<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+})();
+</script>
 
 </body>
 </html>
